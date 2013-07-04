@@ -11,10 +11,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -25,6 +29,8 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class MainActivity extends FragmentActivity implements
 		LoaderManager.LoaderCallbacks<ArrayList<Item>> {
@@ -102,8 +108,8 @@ public class MainActivity extends FragmentActivity implements
 		String session = prefs.getString("session", "");
 		String trimester = prefs.getString("trimester", "");
 		String group = prefs.getString("group", "");
-		if(!session.isEmpty()) {
-			setTitle("Trimester " + trimester + " " + session + " Group " + group);
+		if(!session.equals("")) {
+			setTitle("Tri " + trimester + " " + session + " Group " + group);
 		}
 	}
 
@@ -113,6 +119,38 @@ public class MainActivity extends FragmentActivity implements
 
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+		case R.id.action_info:
+			new AlertDialog.Builder(MainActivity.this)
+			.setTitle("MMU Simple Timetable")
+			.setMessage("Project source code on Github https://github.com/wenjiun/MMU-Simple-Timetable.\n\n" +
+					"Modify timetable.json in the Assets folder to suit your needs.\n\nCreated by JYKam & WJYap")
+			.setPositiveButton("OK", null)
+			.setNegativeButton("Github", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					Uri uri = Uri.parse("https://github.com/wenjiun/MMU-Simple-Timetable");
+					Intent i = new Intent(Intent.ACTION_VIEW, uri);
+					startActivity(i);
+				}
+			})
+		    .show();
+			break;
+		}
+		
+		return super.onOptionsItemSelected(item);
+	}
+	
 	static class AssetLoader extends AsyncTaskLoader<ArrayList<Item>> {
 
 		Context context;
