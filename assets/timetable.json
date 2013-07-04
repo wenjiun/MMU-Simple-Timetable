@@ -1,0 +1,102 @@
+{
+	"session": "2013/14",
+	"trimester": "1",
+	"group": "FE01",
+	"days": [
+		{   "day": "Monday", 
+			"class": [
+		        {
+		            "time": "0800 - 1000",
+		            "subject": "PEN0045 (LEC)",
+					"venue": "CR3046"
+		        },
+		        {
+		            "time": "1100 - 1200",
+		            "subject": "PEN0045 (TUT)",
+					"venue": "AR3007"
+		        },
+		        {
+		            "time": "1200 - 1400",
+		            "subject": "PCM0035 (LEC&TUT)",
+					"venue": "CR1026"
+		        },
+				{
+		            "time": "1500 - 1700",
+		            "subject": "PTG0016 (LEC)",
+					"venue": "CR2047"
+		        }
+		    ]
+	    }, 
+		{   "day": "Tuesday", 
+			"class": [
+		        {
+		            "time": "0800 - 1000",
+		            "subject": "PBC0016 (LEC)",
+					"venue": "CR1026"
+		        },
+		        {
+		            "time": "1000 - 1200",
+		            "subject": "PPH0125 (LEC)",
+					"venue": "BR1020"
+		        },
+		        {
+		            "time": "1400 - 1700",
+		            "subject": "PPH0035L (LEC)",
+					"venue": "AR1007"
+		        }
+		    ]
+		},
+		{   "day": "Wednesday", 
+			"class": [
+		        {
+		            "time": "1000 - 1200",
+		            "subject": "PPC0016 (LEC&TUT)",
+					"venue": "CR1026"
+		        },
+		        {
+		            "time": "1400 - 1600",
+		            "subject": "PTG0016 (LEC&TUT)",
+					"venue": "CR1026"
+		        }
+		    ]
+		},
+		{   "day": "Thursday", 
+			"class": [
+		        {
+		            "time": "0900 - 1100",
+		            "subject": "PBC0016 (TUT)",
+					"venue": "AR3007"
+		        },
+		        {
+		            "time": "1100 - 1200",
+		            "subject": "PPH1025 (LEC)",
+					"venue": "CR2046"
+		        },
+		        {
+		            "time": "1400 - 1600",
+		            "subject": "PCM0035 (LEC)",
+					"venue": "CR1026"
+		        },
+				{
+		            "time": "1800 - 1900",
+		            "subject": "PBC0016 (LEC)",
+					"venue": "CR3046"
+		        }
+		    ]
+		},
+		{   "day": "Friday", 
+			"class": [
+		        {
+		            "time": "1000 - 1200",
+		            "subject": "PPC0016 (LEC)",
+					"venue": "CR2047"
+		        },
+		        {
+		            "time": "1400 - 1600",
+		            "subject": "PPH0125 (TUT)",
+					"venue": "CR3046"
+		        }
+		    ]
+		}
+	]
+}
