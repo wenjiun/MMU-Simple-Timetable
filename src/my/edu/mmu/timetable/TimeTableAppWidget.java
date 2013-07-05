@@ -59,7 +59,7 @@ public class TimeTableAppWidget extends AppWidgetProvider {
 		String session = prefs.getString("session", "");
 		String trimester = prefs.getString("trimester", "");
 		String group = prefs.getString("group", "");
-		if(!session.isEmpty()) {
+		if(!session.equals("")) {
 			title = "Tri " + trimester + " " + session + " " + group;
 		} else {
 			title = "MMU Simple Timetable";			
@@ -87,7 +87,7 @@ public class TimeTableAppWidget extends AppWidgetProvider {
 			for (int j = 0; j < jClasses.length(); j++) {
 				JSONObject jClass = jClasses.getJSONObject(j);
 				String time = jClass.getString("time");
-				String startTime = time.split("-")[0].trim();	
+				String startTime = time.split("-")[1].trim();	
 	            SimpleDateFormat sdf = new SimpleDateFormat("HHmm");
 	            try {
 	            	Date timeStart = sdf.parse(startTime);
