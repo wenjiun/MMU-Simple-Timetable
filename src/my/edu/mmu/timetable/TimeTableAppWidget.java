@@ -53,23 +53,28 @@ public class TimeTableAppWidget extends AppWidgetProvider {
 	static void updateAppWidget(Context context,
 			AppWidgetManager appWidgetManager, int appWidgetId) {
 
-		String title;
+		boolean isWeekend = false;
+		String title= "";
+		String outputString = "";
 		StringBuilder output = new StringBuilder();
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		String session = prefs.getString("session", "");
-		String trimester = prefs.getString("trimester", "");
-		String group = prefs.getString("group", "");
-		if(!session.equals("")) {
-			title = "Tri " + trimester + " " + session + " " + group;
-		} else {
-			title = "MMU Simple Timetable";			
-		}
+//		String session = prefs.getString("session", "");
+//		String trimester = prefs.getString("trimester", "");
 		index = 0;
 		Calendar calendarNow = Calendar.getInstance();
 		int dayOfWeek = calendarNow.get(Calendar.DAY_OF_WEEK);
 		if(dayOfWeek>1 && dayOfWeek<7) {
 			index = dayOfWeek - 2;
-		} 
+		} else {
+			isWeekend = true;
+		}
+		String group = prefs.getString("group", "");
+		if(!group.equals("")) {			
+			title = MainActivity.DAYS[index] + " " + group;
+		} else {
+			title = "MMU Simple Timetable";		
+			outputString = "No data";
+		}
 		try {
 			InputStream is = context.getAssets().open("timetable.json");
 			InputStreamReader isr = new InputStreamReader(is);
@@ -90,22 +95,29 @@ public class TimeTableAppWidget extends AppWidgetProvider {
 				String startTime = time.split("-")[1].trim();	
 	            SimpleDateFormat sdf = new SimpleDateFormat("HHmm");
 	            try {
-	            	Date timeStart = sdf.parse(startTime);
-	            	Calendar calendarStart = Calendar.getInstance();
-	            	calendarStart.setTime(timeStart);
-	            	Log.d("timetable", "start:" + calendarStart.get(Calendar.HOUR_OF_DAY));
-	            	Log.d("timetable", "now:" + calendarNow.get(Calendar.HOUR_OF_DAY));
-	            	if(calendarStart.get(Calendar.HOUR_OF_DAY) > calendarNow.get(Calendar.HOUR_OF_DAY)) {
+	            	if(!isWeekend) {
+		            	Date timeStart = sdf.parse(startTime);
+		            	Calendar calendarStart = Calendar.getInstance();
+		            	calendarStart.setTime(timeStart);
+		            	if(calendarStart.get(Calendar.HOUR_OF_DAY) > calendarNow.get(Calendar.HOUR_OF_DAY)) {
+		    				String subject = jClass.getString("subject");
+		    				String venue = jClass.getString("venue");
+		    				Item item = new Item(day, time, subject, venue);
+		    				output.append(item.toString());
+		    				break;
+		            	}	
+	            	} else {
 	    				String subject = jClass.getString("subject");
 	    				String venue = jClass.getString("venue");
 	    				Item item = new Item(day, time, subject, venue);
 	    				output.append(item.toString());
-	    				break;
+	    				break;	            		
 	            	}
 	            } catch (ParseException e){
 	                // Exception handling goes here
 	            }
 			}
+			outputString = output.toString();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {
@@ -118,7 +130,7 @@ public class TimeTableAppWidget extends AppWidgetProvider {
 		RemoteViews views = new RemoteViews(context.getPackageName(),
 				R.layout.time_table_app_widget);
 		views.setTextViewText(R.id.appwidget_text_title, title);
-		views.setTextViewText(R.id.appwidget_text, output.toString());
+		views.setTextViewText(R.id.appwidget_text, outputString);
 		Intent i = new Intent(context, MainActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		PendingIntent pi = PendingIntent.getActivity(context, 0, i, 0);
